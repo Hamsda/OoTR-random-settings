@@ -18,6 +18,13 @@ def getChoicesFromType(setting):
     return dictionary
 
 
+def castToInt(string):
+    try:
+        return int(string)
+    except ValueError:
+        return string
+
+
 settings_list = list()
 settings_list.extend(list(get_settings_from_tab("main_tab"))[1:])
 settings_list.extend(list(get_settings_from_tab("detailed_tab")))
@@ -33,7 +40,7 @@ try:
     chosen_settings = {}
     for setting, options in weighted_settings.items():
         if options:
-            chosen_settings[setting] = random.choices(population=list(options.keys()), weights=list(options.values()), k=1)[0]
+            chosen_settings[setting] = castToInt(random.choices(population=list(options.keys()), weights=list(options.values()), k=1)[0])
     print("settings chosen")
 
     output = {}
