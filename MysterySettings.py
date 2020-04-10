@@ -12,15 +12,23 @@ def getChoicesFromType(setting):
     dictionary = dict()
     if setting.gui_type == "SearchBox":
         pass
+    elif setting.gui_type == "CheckBox":
+        dictionary[True] = 1
+        dictionary[False] = 1
     else:
         for key in setting.choices:
             dictionary[key] = 1
     return dictionary
 
 
-def castToInt(string):
+def castStringsToType(string):
     try:
-        return int(string)
+        if string == "true":
+            return True
+        elif string == "false":
+            return False
+        else:
+            return int(string)
     except ValueError:
         return string
 
@@ -40,7 +48,7 @@ try:
     chosen_settings = {}
     for setting, options in weighted_settings.items():
         if options:
-            chosen_settings[setting] = castToInt(random.choices(population=list(options.keys()), weights=list(options.values()), k=1)[0])
+            chosen_settings[setting] = castStringsToType(random.choices(population=list(options.keys()), weights=list(options.values()), k=1)[0])
     print("settings chosen")
 
     output = {}
